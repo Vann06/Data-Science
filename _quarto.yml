@@ -1,0 +1,44 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "index.qmd"
+    - "**/notebooks/*.ipynb"
+
+website:
+  title: "CC3084 · Data Science"
+  description: "Laboratorios y proyectos del curso CC3084 (UVG)"
+  site-url: "https://menene.github.io/cc3084-2026-02-40/"
+  repo-url: "https://github.com/menene/cc3084-2026-02-40"
+  reader-mode: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+    tools:
+      - icon: github
+        href: https://github.com/menene/cc3084-2026-02-40
+  sidebar:
+    style: floating
+    collapse-level: 1
+    contents: auto
+  page-footer:
+    left: "CC3084 · UVG"
+    right: "Generado con [Quarto](https://quarto.org/)"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    toc-title: "Contenido"
+    code-fold: show
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    fig-width: 9
+    fig-height: 5
+    lang: es
+
+execute:
+  freeze: auto

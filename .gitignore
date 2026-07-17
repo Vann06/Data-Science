@@ -1,0 +1,61 @@
+# ------------------------------------------------------------
+# Quarto (sitio generado; se reconstruye con `quarto render`)
+# ------------------------------------------------------------
+/_site/
+/.quarto/
+
+# ------------------------------------------------------------
+# Entornos virtuales (no se commitean: cada quien los regenera
+# con `python src/00_init.py` o `pip install -r requirements.txt`)
+# ------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.Python
+
+# ------------------------------------------------------------
+# Datos generados / "basura" (son reproducibles corriendo el
+# pipeline; NO se versionan). Los datos crudos si se conservan.
+# ------------------------------------------------------------
+**/data/processed/
+**/data/interim/
+**/data/tmp/
+*.log
+
+# ------------------------------------------------------------
+# Notebooks: outputs pesados (opcional, si se usa nbstripout)
+# ------------------------------------------------------------
+# *.ipynb
+
+# ------------------------------------------------------------
+# Sistema operativo / editores
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ------------------------------------------------------------
+# Config local de Claude Code (preferencias por maquina)
+# ------------------------------------------------------------
+.claude/settings.local.json
+
+# ------------------------------------------------------------
+# Variables de entorno / secretos
+# ------------------------------------------------------------
+.env
+.env.*
+
+**/*.quarto_ipynb
