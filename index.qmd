@@ -1,8 +1,52 @@
 ---
-title: "CC3084 · Ciencia de Datos"
-subtitle: "Laboratorios y proyectos del curso (UVG)"
+title: "Data Science · CC3084"
+subtitle: "Proyectos, ejercicios y análisis reproducibles"
+page-layout: full
 ---
 
-Codigo de los laboratorios y proyectos del curso de Ciencia de Datos (CC3084,
-UVG). Cada entregable vive en su propia carpeta, autocontenida y reproducible.
-Este sitio publica todos los cuadernos de todas las carpetas.
+::: {.hero}
+# Área de trabajo de Data Science
+
+Este sitio reúne los proyectos, laboratorios y ejercicios desarrollados durante el curso **CC3084 · Data Science**. Cada trabajo integra código, visualizaciones, interpretación de resultados y documentación para que el análisis pueda revisarse y reproducirse.
+
+[Ver proyecto de series de tiempo](01_series_tiempo/notebooks/series-tiempo.ipynb){.btn .btn-primary .btn-lg}
+[Ver repositorio en GitHub](https://github.com/Vann06/Data-Science){.btn .btn-outline-primary .btn-lg}
+:::
+
+## Proyectos disponibles
+
+::: {.project-grid}
+::: {.project-card}
+### 01 · Series de tiempo
+
+**Temperatura promedio mensual de Guatemala, 1950–2026**
+
+El proyecto estudia los extremos, la tendencia, la estacionalidad y la estacionariedad de la temperatura. Posteriormente compara modelos SARIMA, Holt-Winters, suavizamiento exponencial y naive estacional.
+
+**Incluye:**
+
+- Exploración y limpieza de datos.
+- División cronológica en entrenamiento y prueba.
+- Descomposición de la serie.
+- Pruebas ADF, KPSS y Fligner.
+- Identificación mediante ACF y PACF.
+- Comparación de modelos y diagnóstico de residuos.
+- Pronóstico con intervalos de confianza.
+
+[Explorar el cuaderno completo →](01_series_tiempo/notebooks/series-tiempo.ipynb)
+:::
+:::
+
+## Forma de trabajo
+
+Cada proyecto se organiza de manera independiente y contiene sus datos originales, cuadernos, dependencias y documentación. Los resultados guardados en los notebooks se convierten automáticamente en páginas HTML mediante Quarto.
+
+::: {.callout-note}
+## Publicación automática
+
+Cuando se actualiza la rama `main`, GitHub Actions construye nuevamente este sitio y lo publica en GitHub Pages.
+:::
+
+## Herramientas
+
+Python · Jupyter Notebook · pandas · NumPy · Matplotlib · SciPy · statsmodels · scikit-learn · Quarto · GitHub Actions
