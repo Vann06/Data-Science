@@ -6,29 +6,46 @@ project:
     - "**/notebooks/*.ipynb"
 
 website:
-  title: "CC3084 · Data Science"
-  description: "Laboratorios y proyectos del curso CC3084 (UVG)"
-  site-url: "https://menene.github.io/cc3084-2026-02-40/"
-  repo-url: "https://github.com/menene/cc3084-2026-02-40"
+  title: "Data Science · CC3084"
+  description: "Proyectos, laboratorios y ejercicios del curso CC3084 · Data Science"
+  site-url: "https://vann06.github.io/Data-Science/"
+  repo-url: "https://github.com/Vann06/Data-Science"
+  repo-actions: [source, issue]
   reader-mode: true
+  search: true
+  page-navigation: true
+
   navbar:
+    background: primary
     left:
       - href: index.qmd
         text: Inicio
+      - href: 01_series_tiempo/notebooks/series-tiempo.ipynb
+        text: Series de tiempo
     tools:
       - icon: github
-        href: https://github.com/menene/cc3084-2026-02-40
+        href: https://github.com/Vann06/Data-Science
+        aria-label: Repositorio en GitHub
+
   sidebar:
     style: floating
     collapse-level: 1
-    contents: auto
+    contents:
+      - href: index.qmd
+        text: Inicio
+      - section: "Proyectos"
+        contents:
+          - href: 01_series_tiempo/notebooks/series-tiempo.ipynb
+            text: "01 · Series de tiempo"
+
   page-footer:
-    left: "CC3084 · UVG"
-    right: "Generado con [Quarto](https://quarto.org/)"
+    left: "CC3084 · Data Science · UVG"
+    right: "Publicado con Quarto y GitHub Pages"
 
 format:
   html:
     theme: cosmo
+    css: styles.css
     toc: true
     toc-depth: 3
     toc-title: "Contenido"
@@ -40,5 +57,7 @@ format:
     fig-height: 5
     lang: es
 
+# Los notebooks ya contienen sus resultados. El deployment los convierte a HTML
+# sin volver a ejecutar Python en GitHub Actions.
 execute:
-  freeze: auto
+  enabled: false
