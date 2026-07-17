@@ -7,9 +7,9 @@ project:
 
 website:
   title: "CC3084 · Data Science"
-  description: "Laboratorios y proyectos del curso CC3084 (UVG)"
-  site-url: "https://menene.github.io/cc3084-2026-02-40/"
-  repo-url: "https://github.com/menene/cc3084-2026-02-40"
+  description: "Ejercicios y proyectos de Ciencia de Datos"
+  site-url: "https://vann06.github.io/Data-Science/"
+  repo-url: "https://github.com/Vann06/Data-Science"
   reader-mode: true
   navbar:
     left:
@@ -17,7 +17,7 @@ website:
         text: Inicio
     tools:
       - icon: github
-        href: https://github.com/menene/cc3084-2026-02-40
+        href: https://github.com/Vann06/Data-Science
   sidebar:
     style: floating
     collapse-level: 1
@@ -40,5 +40,6 @@ format:
     fig-height: 5
     lang: es
 
+# El workflow ejecuta el notebook antes de renderizar el sitio.
 execute:
-  freeze: auto
+  enabled: false
