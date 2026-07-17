@@ -14,9 +14,9 @@ Cada cambio enviado a la rama `main` activa el proceso de publicación definido 
 
 ## Proyectos
 
-| Proyecto | Descripción | Herramientas | Estado |
+| Proyecto | Descripción | Herramientas | 
 |---|---|---|---|
-| [01 · Series de tiempo](01_series_tiempo/) | Análisis y predicción de la temperatura promedio mensual de Guatemala entre 1950 y 2026. Incluye estacionariedad, ARIMA/SARIMA, Holt-Winters, suavizamiento exponencial y naive estacional. | Python, pandas, statsmodels, scikit-learn, Matplotlib | Completado |
+| [01 · Series de tiempo](01_series_tiempo/) | Análisis y predicción de la temperatura promedio mensual de Guatemala entre 1950 y 2026. Incluye estacionariedad, ARIMA/SARIMA, Holt-Winters, suavizamiento exponencial y naive estacional. | Python, pandas, statsmodels, scikit-learn, Matplotlib |
 
 ## Estructura del repositorio
 
@@ -96,6 +96,5 @@ Cada proyecto se mantiene en una carpeta independiente y debe contener:
 5. Un `codebook.md` cuando el conjunto de datos requiera explicación de variables.
 6. Resultados y conclusiones escritos de forma clara y respaldados por el análisis.
 
-## Autora
 
 Repositorio desarrollado como área de trabajo académica para el curso **CC3084 · Data Science, Universidad del Valle de Guatemala**.
