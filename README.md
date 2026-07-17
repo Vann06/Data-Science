@@ -11,12 +11,12 @@ Los cuadernos se presentan también como un sitio web creado con **Quarto** y pu
 **https://vann06.github.io/Data-Science/**
 
 Cada cambio enviado a la rama `main` activa el proceso de publicación definido en `.github/workflows/publish.yml`.
-
 ## Proyectos
 
-| Proyecto | Descripción | Herramientas | 
-|---|---|---|---|
-| [01 · Series de tiempo](01_series_tiempo/) | Análisis y predicción de la temperatura promedio mensual de Guatemala entre 1950 y 2026. Incluye estacionariedad, ARIMA/SARIMA, Holt-Winters, suavizamiento exponencial y naive estacional. | Python, pandas, statsmodels, scikit-learn, Matplotlib |
+| Proyecto | Descripción | Herramientas |
+|---|---|---|
+| [01 · Series de tiempo](01_series_tiempo/) | Análisis y predicción de la temperatura promedio mensual de Guatemala entre 1950 y 2026.<br><br>Incluye estacionariedad, ARIMA/SARIMA, Holt-Winters, suavizamiento exponencial y naive estacional. | Python, pandas, statsmodels, scikit-learn, Matplotlib |
+
 
 ## Estructura del repositorio
 
