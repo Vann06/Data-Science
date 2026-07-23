@@ -8,3 +8,4 @@ jupyter>=1.0
 nbconvert>=7.10
 ipykernel>=6.25
 openpyxl>=3.1
+seaborn>=0.13
