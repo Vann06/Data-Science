@@ -1,0 +1,1 @@
+# Informe de extracción de características de series de tiempo (Catch22)
