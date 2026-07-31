@@ -1,199 +1,158 @@
-# Data Science · CC3084
+# CC3084 · Data Science
 
-Repositorio académico para los ejercicios, laboratorios y proyectos del curso **CC3084 · Data Science** de la Universidad del Valle de Guatemala.
+Repositorio académico del curso **CC3084 · Data Science** de la Universidad del Valle de Guatemala.
 
-El objetivo es mantener cada trabajo organizado, documentado y reproducible, incluyendo datos, cuadernos de análisis, dependencias, resultados y conclusiones.
+La rama actual de trabajo es **`Lab2`** y contiene el Laboratorio 1 de series de tiempo junto con los avances del **Laboratorio 2: Deep Learning**.
 
-## Sitio publicado
+> **Entrega final:** 2 de agosto de 2026 a las 23:59.
 
-Los cuadernos se presentan también como un sitio creado con **Quarto** y publicado mediante **GitHub Pages**:
+## Objetivo del Laboratorio 2
 
-**https://vann06.github.io/Data-Science/**
-
-Los cambios enviados a `main` activan el proceso definido en `.github/workflows/publish.yml`.
-
-## Proyectos
-
-| Proyecto | Descripción | Herramientas |
-|---|---|---|
-| Laboratorio 1 · Series de tiempo | Análisis exploratorio y modelos clásicos de pronóstico. | Python, pandas, statsmodels, scikit-learn, Matplotlib |
-| **Laboratorio 2 · Deep Learning** | Modelos LSTM, tuneo de hiperparámetros, comparación con el Laboratorio 1 y análisis de similitud mediante catch22. | Python, TensorFlow/Keras, pycatch22, scikit-learn |
-
----
-
-# Laboratorio 2 · Deep Learning para Series de Tiempo
-
-> Rama de trabajo: `Lab2`  
-> Entrega final: **2 de agosto de 2026, 23:59**
-
-## Objetivos del laboratorio
+El laboratorio solicita:
 
 1. Utilizar los mismos conjuntos de entrenamiento y prueba del Laboratorio 1.
 2. Trabajar con al menos dos series temporales.
-3. Crear al menos dos configuraciones LSTM diferentes por cada serie seleccionada.
-4. Hacer tuneo de hiperparámetros y seleccionar el mejor modelo.
-5. Predecir con el mejor LSTM y compararlo con el mejor modelo del Laboratorio 1.
-6. Extraer las 22 características de catch22 para todas las series construidas anteriormente.
-7. Estandarizar las características y realizar PCA, clustering, heatmaps, correlaciones y análisis de distancias.
-8. Crear un modelo LSTM adicional con características de catch22 y compararlo con el mejor LSTM tradicional.
+3. Probar al menos dos configuraciones LSTM por serie y realizar tuneo de parámetros.
+4. Seleccionar el mejor modelo, generar predicciones y compararlo con el mejor modelo del Laboratorio 1.
+5. Extraer las 22 características de catch22 para todas las series construidas anteriormente.
+6. Estandarizar la matriz de características y realizar PCA, clustering, heatmap, correlaciones y análisis de distancias.
+7. Interpretar las similitudes, grupos, características importantes y series atípicas.
+8. Construir un LSTM adicional con características de catch22 y compararlo con el mejor LSTM convencional.
 
-## Estructura de trabajo actual
+## Estado real del repositorio
 
-```text
-Data-Science/
-├── README.md
-└── L01_series_tiempo/
-    ├── data/
-    │   ├── raw/                         # Datos originales; no modificar
-    │   └── processed/                   # Resultados y datos derivados
-    ├── notebooks/
-    │   ├── vias_de_ingreso.ipynb
-    │   ├── laboratorio2_Geograficas.ipynb
-    │   └── seire_total_internacional_LSTM.ipynb
-    ├── scripts/                         # Funciones reutilizables
-    ├── figures/                         # Gráficas finales
-    └── reports/                         # Informe y entregables
-```
+| Bloque | Estado | Evidencia principal |
+|---|---|---|
+| Laboratorio 1: análisis exploratorio y modelos clásicos | Completado | `L01_series_tiempo/informe_series_de_tiempo.md` |
+| Ejercicio 1 del Laboratorio 2 | **Avance sustancialmente completado** | `L01_series_tiempo/notebooks/laboratorio2_Geograficas.ipynb` |
+| LSTM adicional de la serie total internacional | Desarrollado | `L01_series_tiempo/notebooks/seire_total_internacional_LSTM.ipynb` |
+| Series por vías de ingreso | Construidas en el Laboratorio 1 | `L01_series_tiempo/notebooks/vias_de_ingreso.ipynb` |
+| Ejercicio 2: catch22 y análisis de similitud | **Pendiente** | No se encontró todavía una implementación integrada |
+| Informe final del Laboratorio 2 | **Pendiente** | El informe existente corresponde al Laboratorio 1 |
 
-Los nombres anteriores corresponden a los archivos existentes en la rama `Lab2`. No se deben renombrar durante el desarrollo sin coordinarlo con todo el equipo.
+### Aclaración importante
+
+El notebook `laboratorio2_Geograficas.ipynb` ya trabaja con **dos series** —América del Centro y Europa—, prueba varias configuraciones LSTM, realiza selección mediante validación, genera predicciones y compara con modelos del Laboratorio 1.
+
+Por lo tanto, **no es obligatorio construir otro LSTM para vías de ingreso** para cumplir el mínimo de dos series. Las series de vías sí deben incluirse en catch22 porque el ejercicio solicita utilizar todas las series construidas anteriormente.
+
+## Qué falta para terminar
+
+### Ejercicio 1 — Revisión final
+
+- [ ] Ejecutar `laboratorio2_Geograficas.ipynb` desde cero y confirmar que todas las celdas funcionen en orden.
+- [ ] Verificar que las comparaciones utilicen exactamente el mismo período de prueba del Laboratorio 1.
+- [ ] Confirmar que las conclusiones respondan claramente cuál serie fue mejor predicha y si LSTM superó o no al modelo anterior.
+- [ ] Consolidar la tabla final de métricas para que pueda incorporarse al informe.
+
+### Ejercicio 2 — Pendiente principal
+
+- [ ] Explicar brevemente la idea e importancia de catch22.
+- [ ] Extraer las 22 características para la serie total y todas las series geográficas y de vías de ingreso.
+- [ ] Construir una matriz con una fila por serie y una columna por característica.
+- [ ] Estandarizar las características.
+- [ ] Realizar PCA.
+- [ ] Realizar clustering.
+- [ ] Crear el heatmap de características.
+- [ ] Crear la matriz de correlaciones entre características.
+- [ ] Crear el mapa de distancias entre series.
+- [ ] Responder los incisos de interpretación 2.7–2.13.
+- [ ] Construir el LSTM con características catch22 del inciso 2.14.
+- [ ] Compararlo con el mejor LSTM convencional y discutir los resultados.
+
+### Entrega y reproducibilidad
+
+- [ ] Integrar los resultados del Laboratorio 2 en un informe o notebook final.
+- [ ] Actualizar `requirements.txt` con todas las librerías realmente utilizadas, incluyendo las necesarias para catch22 y tuneo.
+- [ ] Eliminar errores o advertencias que afecten la lectura de los resultados.
+- [ ] Dejar evidencia de las contribuciones individuales mediante commits.
+- [ ] Incluir el enlace de Google Drive y el enlace del repositorio en la entrega.
 
 ## División justa para tres integrantes
 
-| Responsable | Archivo principal | Entregables individuales |
+La siguiente distribución evita repetir el Ejercicio 1, permite trabajar en paralelo y deja una contribución técnica verificable para cada persona.
+
+| Integrante | Responsabilidad | Entregable |
 |---|---|---|
-| **Integrante 1 · Vías de ingreso** | `L01_series_tiempo/notebooks/vias_de_ingreso.ipynb` | Desarrollar una serie viable de vía de ingreso con al menos dos configuraciones LSTM, tuneo, selección del mejor modelo, predicción y comparación con el Laboratorio 1. Extraer también catch22 para todas las series de vías y redactar sus hallazgos. La serie marítima no se usará para el LSTM porque no contiene observaciones posteriores a 2017; esta limitación debe quedar documentada. |
-| **Integrante 2 · Series geográficas** | `L01_series_tiempo/notebooks/laboratorio2_Geograficas.ipynb` | Desarrollar la segunda serie requerida con al menos dos configuraciones LSTM, tuneo, selección, predicción y comparación con el Laboratorio 1. Extraer catch22 para todas las series geográficas y redactar sus hallazgos locales. |
-| **Integrante 3 · Serie total e integración** | `L01_series_tiempo/notebooks/seire_total_internacional_LSTM.ipynb` | Extraer catch22 para la serie total, unir los resultados de los otros integrantes, estandarizar la matriz y realizar PCA, clustering, heatmaps, correlaciones y distancias. Construir el LSTM con variables de catch22 y consolidar las conclusiones globales. |
+| **Integrante 1 — Extracción catch22** | Crear una función reutilizable para extraer las 22 características, aplicarla a todas las series, construir la matriz y generar su versión estandarizada. | Código reproducible, matriz sin escalar, matriz estandarizada y explicación del inciso 2.1. |
+| **Integrante 2 — Exploración de similitud** | Trabajar con la matriz estandarizada y realizar PCA, clustering, heatmap, correlaciones y mapa de distancias. Responder 2.7–2.10. | Cinco análisis gráficos, criterios metodológicos y primeras interpretaciones. |
+| **Integrante 3 — Interpretación y modelo final** | Responder 2.11–2.13, construir el LSTM con características catch22 del inciso 2.14, comparar resultados e integrar las conclusiones finales. | Interpretación completa, nuevo modelo, tabla comparativa y conclusiones. |
 
-Esta distribución deja a los integrantes 1 y 2 con una serie LSTM completa cada uno. El integrante 3 asume la integración estadística, las visualizaciones globales y el modelo adicional con catch22.
+### Parte recomendada para terminar hoy
 
-## Contrato común para integrar resultados
+La parte del **Integrante 1** puede cerrarse hoy sin esperar a los demás:
 
-Cada integrante debe conservar el nombre original de sus series y producir las métricas LSTM con una estructura común:
+1. Identificar todas las series ya creadas en los notebooks del Laboratorio 1.
+2. Convertir cada serie a un arreglo numérico limpio y ordenado cronológicamente.
+3. Extraer las 22 características de catch22 con una sola función.
+4. Crear una tabla con `serie` como identificador y 22 columnas de características.
+5. Revisar valores faltantes o infinitos.
+6. Estandarizar únicamente las columnas numéricas.
+7. Guardar ambas matrices y documentar qué series fueron incluidas.
+8. Hacer commits propios con mensajes claros.
 
-```text
-serie, modelo, ventana, unidades, dropout, learning_rate, batch_size,
-epochs, MAE, RMSE, MAPE_o_sMAPE
-```
+Con este bloque terminado, los otros dos integrantes pueden trabajar directamente sobre la misma matriz sin modificar el código de extracción.
 
-Los resultados de catch22 deben cumplir lo siguiente:
-
-- Una fila por serie temporal.
-- Una columna identificadora llamada `serie`.
-- Las 22 características en columnas separadas.
-- Valores sin estandarizar en los archivos individuales.
-- La estandarización debe realizarse una sola vez sobre la matriz completa.
-
-Archivos sugeridos:
+## Estructura actual
 
 ```text
-L01_series_tiempo/data/processed/
-├── metricas_lstm_vias.csv
-├── metricas_lstm_geograficas.csv
-├── catch22_vias.csv
-├── catch22_geograficas.csv
-├── catch22_total.csv
-└── catch22_matriz_completa.csv
+Data-Science/
+├── L01_series_tiempo/
+│   ├── data/
+│   │   ├── Base_Migracion_2009-2026jun.csv.xlsx
+│   │   └── raw/
+│   │       └── Base_Migracion_2009-2026jun.xlsx
+│   ├── notebooks/
+│   │   ├── Analisis_zonas_geograficas.ipynb
+│   │   ├── analisis_exploratorio.ipynb
+│   │   ├── analisis_preliminar_series.ipynb
+│   │   ├── analisis_serie_total_internacional.ipynb
+│   │   ├── laboratorio2_Geograficas.ipynb
+│   │   ├── seire_total_internacional_LSTM.ipynb
+│   │   └── vias_de_ingreso.ipynb
+│   ├── codebook.md
+│   ├── informe_series_de_tiempo.md
+│   ├── informe_series_de_tiempo.pdf
+│   └── README.md
+├── .github/workflows/
+│   └── publish.yml
+├── _quarto.yml
+├── index.qmd
+├── requirements.txt
+├── styles.css
+└── README.md
 ```
 
-## Estructura mínima de cada notebook LSTM
+## Flujo de trabajo recomendado
 
-1. Objetivo y justificación de la serie seleccionada.
-2. Carga y validación de datos.
-3. Reutilización exacta del corte de entrenamiento y prueba del Laboratorio 1.
-4. Escalado ajustado solamente con entrenamiento.
-5. Construcción de ventanas temporales.
-6. Primera configuración LSTM.
-7. Segunda configuración LSTM.
-8. Tuneo de hiperparámetros.
-9. Selección del mejor modelo usando validación.
-10. Predicción sobre prueba.
-11. Inversión del escalado y métricas en la escala original.
-12. Comparación con el mejor modelo del Laboratorio 1 usando el mismo horizonte y las mismas métricas.
-13. Interpretación, limitaciones y conclusión.
+Cada integrante debe trabajar desde `Lab2` en una rama propia:
 
-## Estructura mínima del análisis catch22
+```text
+lab2-catch22-extraccion-<nombre>
+lab2-catch22-analisis-<nombre>
+lab2-catch22-modelo-<nombre>
+```
 
-1. Explicación breve de la idea detrás de catch22.
-2. Extracción de las 22 características para todas las series.
-3. Construcción de la matriz completa.
-4. Estandarización.
-5. PCA.
-6. Clustering.
-7. Heatmap de características.
-8. Matriz de correlaciones.
-9. Mapa de distancias entre series.
-10. Identificación de similitudes, grupos naturales y series atípicas.
-11. Comparación con tendencia, estacionalidad, volatilidad, pandemia y autocorrelación observadas en el Laboratorio 1.
-12. Tres descubrimientos nuevos obtenidos mediante catch22.
-13. Modelo LSTM con variables de catch22 y comparación final.
+Reglas de integración:
 
-## Plan para cerrar hoy la parte de Vías de ingreso
-
-La persona responsable de `vias_de_ingreso.ipynb` puede terminar su bloque sin esperar la integración global:
-
-- [ ] Seleccionar la serie aérea o terrestre para el LSTM; no usar marítima como serie principal.
-- [ ] Confirmar que el train/test sea exactamente el del Laboratorio 1.
-- [ ] Recuperar las métricas del mejor modelo anterior.
-- [ ] Entrenar dos configuraciones LSTM claramente diferentes.
-- [ ] Hacer un tuneo pequeño y reproducible.
-- [ ] Elegir el mejor modelo con validación, no con el conjunto de prueba.
-- [ ] Generar predicciones y métricas en escala original.
-- [ ] Comparar contra el modelo anterior usando el mismo período de prueba.
-- [ ] Extraer catch22 para todas las series de vías disponibles.
-- [ ] Exportar `metricas_lstm_vias.csv` y `catch22_vias.csv`.
-- [ ] Escribir conclusiones breves dentro del notebook.
-- [ ] Hacer commits propios y abrir un Pull Request hacia `Lab2`.
-
-## Flujo de trabajo en GitHub
-
-1. Crear una rama individual desde `Lab2`:
-   - `lab2-vias-<nombre>`
-   - `lab2-geograficas-<nombre>`
-   - `lab2-integracion-<nombre>`
-2. No modificar archivos de otra persona sin coordinación.
-3. No alterar archivos de `data/raw/`.
-4. Hacer commits pequeños y descriptivos.
-5. Guardar gráficas finales en `figures/` y resultados tabulares en `data/processed/`.
-6. Abrir un Pull Request hacia `Lab2`.
-7. Resolver conflictos antes de integrar.
-8. Conservar el historial individual, porque la evaluación considera las contribuciones de cada integrante.
+- No modificar los datos originales.
+- No seleccionar hiperparámetros usando el conjunto de prueba.
+- No estandarizar cada grupo por separado; la matriz completa debe estandarizarse una sola vez.
+- Mantener una fila por serie y las mismas 22 columnas para todos.
+- Ejecutar el notebook completo antes de abrir el Pull Request.
+- Hacer commits pequeños y descriptivos.
+- Conservar el historial individual porque la calificación considera las contribuciones de cada integrante.
 
 Ejemplos de commits:
 
 ```text
-feat: agregar primer modelo LSTM para via aerea
-feat: tunear hiperparametros del LSTM de vias
-analysis: comparar LSTM con modelo del laboratorio 1
-data: exportar caracteristicas catch22 de vias
-report: documentar resultados y limitaciones de vias
+feat: extraer caracteristicas catch22 de todas las series
+feat: construir matriz estandarizada de catch22
+analysis: agregar PCA y clustering de series
+analysis: interpretar series atipicas y grupos naturales
+model: comparar LSTM con variables catch22
+report: integrar conclusiones del laboratorio 2
 ```
-
-## Lista final de verificación
-
-- [ ] Dos series seleccionadas con el mismo train/test del Laboratorio 1.
-- [ ] Dos o más configuraciones LSTM por serie.
-- [ ] Tuneo documentado.
-- [ ] Mejor modelo elegido con un criterio explícito.
-- [ ] Predicciones y gráficas en escala original.
-- [ ] Comparación contra los modelos del Laboratorio 1.
-- [ ] catch22 aplicado a todas las series.
-- [ ] Matriz completa y estandarizada.
-- [ ] PCA, clustering, heatmaps, correlaciones y distancias.
-- [ ] Respuestas interpretativas completas.
-- [ ] LSTM adicional con características de catch22.
-- [ ] Código reproducible y contribuciones versionadas.
-- [ ] Informe o notebooks con todas las explicaciones.
-
-## Tecnologías utilizadas
-
-- Python y Jupyter Notebook.
-- pandas y NumPy para manipulación de datos.
-- TensorFlow/Keras para modelos LSTM.
-- scikit-learn para preprocesamiento, métricas, PCA y clustering.
-- pycatch22 para extracción de características.
-- Matplotlib para visualizaciones.
-- Quarto, GitHub Actions y GitHub Pages para publicación.
 
 ## Ejecución local
 
@@ -216,8 +175,17 @@ En macOS o Linux:
 source .venv/bin/activate
 ```
 
-Después, instalar las dependencias del proyecto y abrir Jupyter Notebook.
+Después:
 
----
+```bash
+pip install -r requirements.txt
+jupyter notebook
+```
 
-Repositorio desarrollado como área de trabajo académica para **CC3084 · Data Science, Universidad del Valle de Guatemala**.
+## Publicación
+
+El sitio del curso se publica mediante Quarto y GitHub Pages:
+
+**https://vann06.github.io/Data-Science/**
+
+La publicación automática se encuentra configurada en `.github/workflows/publish.yml`.
