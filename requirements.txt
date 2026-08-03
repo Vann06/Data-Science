@@ -12,3 +12,4 @@ seaborn>=0.13
 tensorflow>=2.21
 keras-tuner>=1.4
 tensorboard>=2.21
+pycatch22>=0.4.5
