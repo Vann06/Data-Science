@@ -1,9 +1,11 @@
-# Informe narrativo — Laboratorio 2: Deep Learning y Catch22
+# Informe — Laboratorio 2: Deep Learning y Catch22
 
-> **Universidad del Valle de Guatemnala**
+> **Universidad del Valle de Guatemala**
 
 > VIANKA CASTRO -23201
+
 > SEBASTIÁN GARCÍA -22291
+
 > RICARDO GODÍNEZ -23247
 
 Este documento recorre, en el orden en que se trabajaron, los cinco notebooks
