@@ -32,6 +32,9 @@ __pycache__/
 **/data/interim/
 **/data/tmp/
 *.log
+Lab3/data/asl_alphabet_train/
+Lab3/data/asl_alphabet_test/
+Lab3/Notebooks/data/
 
 # ------------------------------------------------------------
 # Notebooks: outputs pesados (opcional, si se usa nbstripout)
