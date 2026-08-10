@@ -34,6 +34,7 @@ __pycache__/
 *.log
 Lab3/data/asl_alphabet_train/
 Lab3/data/asl_alphabet_test/
+Lab3/data/*.zip
 Lab3/Notebooks/data/
 
 # ------------------------------------------------------------
