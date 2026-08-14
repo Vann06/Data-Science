@@ -59,3 +59,20 @@ Thumbs.db
 .env.*
 
 **/*.quarto_ipynb
+
+# ------------------------------------------------------------
+# Laboratorio 4 - productos reproducibles de Copernicus
+# ------------------------------------------------------------
+# Los GeoTIFF, mapas, CSV de resultados y descargas se regeneran desde los
+# notebooks/scripts. Se versionan el código, los notebooks y los .gitkeep.
+/l04_analisis_geoespacial/data/atitlan/
+/l04_analisis_geoespacial/data/amatitlan/
+/l04_analisis_geoespacial/data/indices/
+/l04_analisis_geoespacial/data/serie_temporal_preliminar.csv
+/l04_analisis_geoespacial/notebooks/datos/
+/l04_analisis_geoespacial/notebooks/resultados_cyano/
+/l04_analisis_geoespacial/notebooks/resultados_cyano_*.csv
+/l04_analisis_geoespacial/notebooks/resultados_temporales_cianobacteria.csv
+/l04_analisis_geoespacial/notebooks/*.tif
+/l04_analisis_geoespacial/notebooks/*.png
+/l04_analisis_geoespacial/outputs/
