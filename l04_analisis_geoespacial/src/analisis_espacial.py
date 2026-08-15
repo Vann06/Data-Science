@@ -85,6 +85,7 @@ def describe_position(row: float, column: float, shape: tuple[int, int]) -> str:
 
 def analyze_lake(lake: str, temporal: pd.DataFrame) -> dict:
     """Crea mapas y obtiene un resumen espacial para un lago."""
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     series = temporal.loc[temporal["lago"] == lake].copy().sort_values("fecha")
     low_date = series.loc[series["promedio_cyano"].idxmin(), "fecha"]
     peak_date = series.loc[series["promedio_cyano"].idxmax(), "fecha"]
