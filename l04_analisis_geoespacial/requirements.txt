@@ -7,4 +7,5 @@ pandas==2.3.3
 rasterio==1.4.4
 matplotlib==3.10.9
 scipy==1.15.3
+pyarrow==25.0.1
 ipykernel>=6.29,<7
