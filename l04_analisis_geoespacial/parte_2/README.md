@@ -1,12 +1,15 @@
-# Laboratorio 4 — Parte 2 (ejercicios 1–3)
+# Laboratorio 4 — Parte 2 (ejercicios 1–5)
 
-Este directorio contiene el avance ejecutable de preparación de datos,
-construcción de la respuesta binaria y selección de predictores.
+Este directorio contiene el análisis ejecutable de preparación de datos,
+construcción de la respuesta binaria, selección de predictores, entrenamiento y
+evaluación de tres modelos de clasificación.
 
 ## Archivos principales
 
 - `notebooks/data_prep.ipynb`: análisis, resultados, gráficas, decisiones y bibliografía.
 - `src/preparar_ml.py`: pipeline reproducible que valida y procesa las 22 escenas.
+- `src/modelar_ml.py`: muestreo reproducible, división 70/30, ajuste y evaluación
+  de Regresión Logística, Random Forest y XGBoost.
 - `outputs/`: figuras generadas por el notebook.
 - `data/processed/`: dataset Parquet particionado y tablas auxiliares. Es un producto
   reproducible y está ignorado por Git.
@@ -17,6 +20,9 @@ Desde la raíz del repositorio, con el entorno virtual activado:
 
 ```powershell
 python l04_analisis_geoespacial/parte_2/src/preparar_ml.py `
+  --project-dir l04_analisis_geoespacial
+
+python l04_analisis_geoespacial/parte_2/src/modelar_ml.py `
   --project-dir l04_analisis_geoespacial
 ```
 
@@ -33,3 +39,11 @@ versión del pipeline; si cambia la lógica de preparación, el script los regen
 - 137,708 positivos (1.006 %) y razón de desbalance de 98.41:1.
 - Conjunto predictor auditado para evitar bandas e índices usados directa o
   indirectamente en la construcción de la respuesta.
+- Muestra proporcional y reproducible de 600,000 observaciones: 420,000 para
+  entrenamiento y 180,000 para una prueba común a los tres modelos.
+- Ajuste de hiperparámetros realizado exclusivamente con una partición interna
+  del entrenamiento; el conjunto de prueba no interviene en la selección.
+- Random Forest seleccionado: PR-AUC 0.967, recall 0.975 y F2 0.935 con el umbral
+  operativo elegido en validación.
+- Evaluación desagregada por lago y advertencia explícita sobre autocorrelación
+  espacial y la escasez de positivos de Atitlán en la muestra de prueba.
