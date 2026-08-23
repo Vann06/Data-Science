@@ -76,3 +76,10 @@ Thumbs.db
 /l04_analisis_geoespacial/notebooks/*.tif
 /l04_analisis_geoespacial/notebooks/*.png
 /l04_analisis_geoespacial/outputs/
+
+# Duplicados de bandas crudas que quedaron mal ubicados (deben estar en
+# /l04_analisis_geoespacial/data/, no aqui). Solo /parte_2/data/processed/
+# es correcto dentro de parte_2/data/ (ya cubierto por **/data/processed/).
+/l04_analisis_geoespacial/parte_2/data/atitlan/
+/l04_analisis_geoespacial/parte_2/data/amatitlan/
+/l04_analisis_geoespacial/parte_2/data/indices/

@@ -1,0 +1,14 @@
+variable,media_abs_shap
+num__b07,7.1948795
+num__y_utm,2.1267073
+num__x_utm,1.4958168
+cat__lago_amatitlan,0.4980051
+num__b8a,0.44581488
+num__sin_dia_anio,0.43719524
+num__dias_desde_inicio,0.41531736
+num__cos_dia_anio,0.38910037
+num__nubosidad_pct,0.22585523
+cat__satelite_Sentinel-2B,0.13036178
+cat__lago_atitlan,0.079382755
+cat__satelite_Sentinel-2C,0.059038196
+cat__satelite_Sentinel-2A,0.02938845

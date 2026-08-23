@@ -1,0 +1,14 @@
+variable,importancia_gain
+cat__satelite_Sentinel-2C,0.0003601281
+num__x_utm,0.0006364962
+cat__satelite_Sentinel-2A,0.0009185604
+num__b8a,0.0009954784
+num__sin_dia_anio,0.0013357784
+num__cos_dia_anio,0.0017892785
+cat__satelite_Sentinel-2B,0.0021243398
+num__dias_desde_inicio,0.0031642136
+num__nubosidad_pct,0.00376269
+num__b07,0.004377353
+num__y_utm,0.021652509
+cat__lago_amatitlan,0.3153875
+cat__lago_atitlan,0.6434957
