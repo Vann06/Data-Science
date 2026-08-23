@@ -1,7 +1,13 @@
 # Laboratorio 4, Parte 2 — Análisis de modelos usando datos geoespaciales
 
-> - SEBASTIÁN GARCÍA BUSTAMANTE
-> - VIANKA VANESSA CASTRO ORDOÑEZ
+**CC3084 — Data Science · Laboratorio 4**
+**Universidad del Valle de Guatemala · Semestre II, 2026**
+
+> Vianka Castro -23201
+>
+> Ricardo Godinez -23247
+>
+> Sebastian Bustamante -22291
 
 Los lagos Atitlán y Amatitlán son cuerpos de agua de gran importancia ecológica, económica y cultural para Guatemala. Sin embargo, ambos han presentado episodios de proliferación de cianobacterias que pueden afectar los ecosistemas, el turismo y la salud pública. Como el muestreo físico frecuente es costoso y tiene una cobertura espacial limitada, en este laboratorio se evaluó si las imágenes multiespectrales Sentinel-2 pueden utilizarse para identificar zonas con presencia elevada de cianobacteria.
 
