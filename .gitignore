@@ -27,10 +27,18 @@ __pycache__/
 # ------------------------------------------------------------
 # Datos generados / "basura" (son reproducibles corriendo el
 # pipeline; NO se versionan). Los datos crudos si se conservan.
+#
+# Se ignora el CONTENIDO ('/*') y no la carpeta: si se ignorara la
+# carpeta, git no entraria a revisarla y la excepcion del .gitkeep
+# nunca se aplicaria. Asi la estructura de directorios queda
+# versionada aunque los datos no.
 # ------------------------------------------------------------
-**/data/processed/
-**/data/interim/
-**/data/tmp/
+**/data/processed/*
+!**/data/processed/.gitkeep
+**/data/interim/*
+!**/data/interim/.gitkeep
+**/data/tmp/*
+!**/data/tmp/.gitkeep
 *.log
 
 # ------------------------------------------------------------
