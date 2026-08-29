@@ -39,6 +39,11 @@ __pycache__/
 !**/data/interim/.gitkeep
 **/data/tmp/*
 !**/data/tmp/.gitkeep
+
+# Recursos descargados por NLTK (corpus, tokenizadores y modelos).
+# Se descargan automaticamente desde los notebooks, por lo que no forman
+# parte de la entrega ni deben versionarse.
+**/data/nltk_data/
 *.log
 
 # ------------------------------------------------------------
