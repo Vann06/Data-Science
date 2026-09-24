@@ -1,0 +1,6 @@
+.venv/
+**/__pycache__/
+**/.ipynb_checkpoints/
+Data/*.xlsx
+Transform_Data/*
+!Transform_Data/.gitkeep
