@@ -1,7 +1,0 @@
-pandas
-numpy
-matplotlib
-networkx
-jupyter
-scikit-learn
-nltk
