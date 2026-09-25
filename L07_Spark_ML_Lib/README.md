@@ -1,84 +1,138 @@
-﻿# Laboratorio 7: Spark MLlib — ENEIC
+# Laboratorio 7 Spark MLlib ENEIC
 
-El notebook `Notebooks/01_preparacion_eneic.ipynb` cubre los ejercicios recibidos:
-1. Carga, armonización y calidad de datos.
-2. Estadística descriptiva y exploración.
-3. Correlaciones de Pearson.
+Este proyecto prepara las bases de Personas de la ENEIC, desarrolla el análisis exploratorio solicitado y construye dos pipelines de regresión con Spark 3.5.1. El flujo reserva el primer trimestre de 2026 para la evaluación final y evita usarlo durante la selección de modelos.
 
-Incluye respuestas conceptuales e interpretaciones numéricas generadas desde los resultados.
-Las instrucciones de clustering y regresión aún están pendientes de recibir.
+## Estructura
 
-## Organización
+```text
+L07_Spark_ML_Lib/
+├── Data/
+│   ├── descargar.py
+│   ├── fuentes.json
+│   └── *.xlsx                         # Descargados localmente, ignorados por Git
+├── Notebooks/
+│   ├── 01_preparacion_eneic.ipynb
+│   └── 02_pipelines.ipynb
+├── Transform_Data/                    # Parquet, métricas, modelos y gráficas
+├── dockerfile
+├── compose.yaml
+├── docker-compose.yml                 # Configuración anterior; no recomendada
+└── requirements.txt
+```
 
-- `Data/`: cinco bases de Personas y cinco diccionarios originales. `fuentes.json` registra las URL del INE; `descargar.py` recupera archivos faltantes sin sobrescribirlos.
-- `Transform_Data/`: Parquet separados de 2025 y 2026, auditorías, CSV, gráficos y manifiesto de ejecución con huellas SHA-256.
-- `Notebooks/`: notebook, exportación HTML tras ejecutarlo y utilidades de reproducción.
+## Qué hace cada notebook
 
-## Docker existente: revisado, sin modificaciones
+### 01 preparacion eneic
 
-`dockerfile` usa Python 3.11, Java 17 y PySpark 3.5.1, adecuados para la guía.
-No instala `openpyxl`. `docker-compose.yml` sólo monta `working_dir` y `notebooks`;
-no monta `Data` ni `Transform_Data`. También existe el `compose.yaml` de la preparación
-anterior: no conviene invocar Compose sin indicar qué archivo se quiere usar.
-Todos estos archivos se conservan tal como los dejó el usuario.
+1. Lee individualmente los cinco Excel y sus diccionarios.
+2. Conserva la procedencia y asigna el período calendario por archivo.
+3. Homologa tipos y códigos y une 2025 con `unionByName`.
+4. Audita dimensiones, faltantes, filtros y claves duplicadas.
+5. Guarda por separado los conjuntos preparados de 2025 y 2026 en Parquet.
+6. Calcula descriptivos, distribuciones, medianas, evolución trimestral y correlaciones de Pearson para 2025.
 
-Para ejecutar sin modificar Docker, abrir Docker Desktop y, en PowerShell desde esta
-carpeta, utilizar la imagen disponible `spark_practica-1-pyspark:latest`:
+La primera ejecución puede tardar porque cada archivo contiene entre 49 mil y 52 mil registros y hasta 302 columnas. Los mensajes `Task of very large size` son advertencias de rendimiento y no significan por sí solos que la ejecución haya fallado.
+
+### 02 pipelines
+
+Implementa los puntos 5 y 6:
+
+- Entrenamiento: `2025T1`, `2025T2` y `2025T3`.
+- Validación: `2025T4`.
+- Prueba final reservada: `2026T1`.
+- Baseline ajustado con la media salarial del entrenamiento.
+- `StringIndexer`, `OneHotEncoder` y `VectorAssembler` dentro de cada pipeline.
+- Regresión lineal con estandarización interna y siete configuraciones de regularización.
+- Random Forest con cinco combinaciones de árboles y profundidad, y semilla fija.
+- MAE, RMSE y R² calculados sobre exactamente la misma validación.
+- Métricas de entrenamiento y brechas de generalización para apoyar el análisis de sobreajuste.
+- Selección por menor RMSE y guardado de los mejores `PipelineModel`.
+
+El notebook 02 se detiene con un mensaje explicativo si el notebook 01 todavía no ha generado `Transform_Data/personas_preparadas_2025`.
+
+## Descargar los datos
+
+Desde PowerShell:
+
+```powershell
+cd C:\Projects\Data-Science\L07_Spark_ML_Lib
+python Data\descargar.py
+```
+
+El descargador no sobrescribe archivos existentes. Los Excel y los derivados están excluidos de Git por su tamaño.
+
+## Entorno recomendado con Docker
+
+El contenedor usa Python 3.11, Java 17 y PySpark 3.5.1. Primero abra Docker Desktop y espere a que el motor esté listo.
+
+Construya la imagen:
+
+```powershell
+cd C:\Projects\Data-Science\L07_Spark_ML_Lib
+docker build -f dockerfile -t l07-spark:3.5.1 .
+```
+
+Inicie JupyterLab con el laboratorio completo montado:
 
 ```powershell
 $laboratorio = (Get-Location).Path
-docker run --rm --name l07-eneic-ejecucion --mount "type=bind,source=$laboratorio,target=/opt/app/laboratorio" --workdir /opt/app/laboratorio --env SPARK_LOCAL_IP=127.0.0.1 --env PYTHONPATH=/tmp/labdeps --entrypoint bash spark_practica-1-pyspark:latest -lc "python -m pip install --target /tmp/labdeps openpyxl 'pandas<3' 'numpy<2' && python Notebooks/ejecutar_laboratorio.py"
+
+docker run --rm `
+  --name l07-eneic-jupyter `
+  -p 127.0.0.1:8888:8888 `
+  --mount "type=bind,source=$laboratorio,target=/opt/app/laboratorio" `
+  --workdir /opt/app/laboratorio `
+  --env SPARK_LOCAL_IP=127.0.0.1 `
+  --env PYTHONPATH=/tmp/labdeps `
+  --entrypoint bash `
+  l07-spark:3.5.1 `
+  -lc "python -m pip install --target /tmp/labdeps openpyxl 'pandas>=2.2,<3' 'numpy<2' && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/opt/app/laboratorio"
 ```
 
-Las dependencias adicionales se instalan sólo en `/tmp/labdeps` del contenedor temporal.
-No se cambia la imagen ni Python en Windows. El contenedor desaparece al terminar;
-los resultados quedan en la carpeta montada. Se necesita red para esas dependencias.
-Si la imagen no existe en otro equipo, construirla con el Dockerfile existente:
+Abra la URL `http://127.0.0.1:8888/lab?token=...` mostrada en la terminal. Jupyter continuará ejecutándose mientras:
 
-```powershell
-docker build -f dockerfile -t spark_practica-1-pyspark:latest .
+- la terminal permanezca abierta;
+- no se presione `Ctrl+C`;
+- Docker Desktop siga funcionando.
+
+El aviso `Skipped non-installed server(s)` sólo indica que no están instalados algunos servidores opcionales de autocompletado y no impide ejecutar Python o Spark.
+
+## Orden de ejecución
+
+1. Abra `Notebooks/01_preparacion_eneic.ipynb`.
+2. Use **Kernel > Restart Kernel and Run All Cells**.
+3. Confirme que se hayan creado:
+   - `Transform_Data/personas_preparadas_2025/`
+   - `Transform_Data/personas_preparadas_2026/`
+   - `Transform_Data/manifiesto_ejecucion.json`
+4. Abra `Notebooks/02_pipelines.ipynb`.
+5. Use nuevamente **Restart Kernel and Run All Cells**.
+6. Revise las tablas de métricas y la interpretación generada al final.
+
+## Salidas de los pipelines
+
+El notebook 02 genera:
+
+```text
+Transform_Data/
+├── comparacion_modelos_validacion.csv
+├── configuraciones_regresion_lineal.csv
+├── configuraciones_random_forest.csv
+├── seleccion_modelos_validacion.json
+└── modelos/
+    ├── validacion_regresion_lineal/
+    └── validacion_random_forest/
 ```
 
-Para abrir Jupyter de forma interactiva con los datos montados:
+Estos son modelos de selección entrenados con 2025T1–T3 y comparados sobre 2025T4. El conjunto 2026T1 permanece reservado y no se consulta en los pipelines documentados aquí.
 
-```powershell
-$laboratorio = (Get-Location).Path
-docker run --rm --name l07-eneic-jupyter -p 127.0.0.1:8888:8888 --mount "type=bind,source=$laboratorio,target=/opt/app/laboratorio" --workdir /opt/app/laboratorio --env SPARK_LOCAL_IP=127.0.0.1 --env PYTHONPATH=/tmp/labdeps --entrypoint bash spark_practica-1-pyspark:latest -lc "python -m pip install --target /tmp/labdeps openpyxl 'pandas<3' 'numpy<2' && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/opt/app/laboratorio"
-```
+## Criterios metodológicos
 
-Abrir la URL local con token mostrada en consola. Si 8888 está ocupado, cambiar el puerto
-del host, por ejemplo `-p 127.0.0.1:8889:8888`.
-El `requirements.txt` previo describe una alternativa con Spark 3.5.7; no se usa en estos
-comandos, que respetan Spark 3.5.1 de la imagen del curso.
+- Los modelos usan exactamente `edad`, `antiguedad`, `horas_semanales`, `nivel_educativo`, `categoria_ocupacional` y `dominio`.
+- La etiqueta es `salario_mensual` en quetzales.
+- No se utilizan identificadores, FACTOR, otros ingresos, salario por hora ni cluster como predictores.
+- No se imputan salarios ni se recortan extremos.
+- Las métricas principales no son ponderadas.
+- Los resultados describen los registros analizados y no son estimaciones oficiales de la población guatemalteca.
 
-## Contenido y decisiones
-
-Se verifican dimensiones y procedencia; se unen los cuatro archivos de 2025 con
-`unionByName`; se muestran esquema y cinco registros; se contabilizan faltantes por
-variable y archivo antes de filtrar. Los filtros tienen orden fijo y se reconcilian
-los totales iniciales y finales. Se verifica la clave período–hogar–persona antes y
-después de filtrar. Una huella de todas las columnas originales distingue repeticiones
-exactas de conflictos, sin eliminar duplicados automáticamente.
-
-Los descriptivos, cuantiles exactos, histogramas agregados, medianas por grupo y trimestre,
-y correlaciones se calculan en Spark sobre todos los registros elegibles de 2025.
-Pandas se usa para leer Excel y presentar agregaciones pequeñas. No se usa scikit-learn
-ni se transfieren bases analíticas completas a pandas.
-
-Los resultados no se ponderan por FACTOR y no son estimaciones oficiales poblacionales.
-Se conserva el salario en quetzales, sin imputación ni recortes. El histograma logarítmico
-sólo cambia la visualización. Las filas longitudinales no equivalen a personas distintas.
-2026 se prepara y audita; su análisis salarial se reserva para la prueba final.
-
-## Reproducción y trabajo grupal
-
-`ejecutar_laboratorio.py` ejecuta de principio a fin y guarda las salidas en el notebook;
-al completarse también genera HTML. `generar_notebook.py` reconstruye el notebook desde
-sus fuentes, pero borra las salidas al regenerarlo: no es necesario ejecutarlo para
-abrir o volver a correr el notebook.
-
-El proyecto pertenece al repositorio Git `Data-Science`. Registrar las contribuciones
-reales de cada integrante. Excel y derivados se excluyen de Git por tamaño; se conservan
-las fuentes y el descargador para reproducibilidad.
-
-Fuente: https://www.ine.gob.gt/encuesta-nacional-de-empleo-e-ingresos/
+Fuente de datos: Instituto Nacional de Estadística de Guatemala, Encuesta Nacional de Empleo e Ingresos Continua.
