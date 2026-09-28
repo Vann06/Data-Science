@@ -11,13 +11,14 @@ L07_Spark_ML_Lib/
 │   ├── fuentes.json
 │   └── *.xlsx                         # Descargados localmente, ignorados por Git
 ├── Notebooks/
-│   ├── 01_preparacion_eneic.ipynb
-│   └── 02_pipelines.ipynb
+│   ├── 01_preparacion_eneic.ipynb     # Actividades 1–3
+│   ├── 02_segmentacion_kmeans.ipynb   # Actividad 4
+│   ├── 03_pipelines.ipynb             # Actividades 5–6
+│   └── 04_evaluacion_final.ipynb      # Actividades 7–8
 ├── Transform_Data/                    # Parquet, métricas, modelos y gráficas
-├── dockerfile
-├── compose.yaml
-├── docker-compose.yml                 # Configuración anterior; no recomendada
-└── requirements.txt
+├── dockerfile                         # Python 3.11 + Java 17 + dependencias
+├── compose.yaml                       # Levanta JupyterLab con el laboratorio montado
+└── requirements.txt                   # Versiones instaladas en la imagen
 ```
 
 ## Qué hace cada notebook
@@ -33,7 +34,18 @@ L07_Spark_ML_Lib/
 
 La primera ejecución puede tardar porque cada archivo contiene entre 49 mil y 52 mil registros y hasta 302 columnas. Los mensajes `Task of very large size` son advertencias de rendimiento y no significan por sí solos que la ejecución haya fallado.
 
-### 02 pipelines
+### 02 segmentacion kmeans
+
+Implementa la actividad 4:
+
+- Compara tres escenarios: edad, antigüedad y horas; lo mismo más salario en quetzales; y lo mismo más log10 del salario.
+- `VectorAssembler`, `StandardScaler` y `KMeans` dentro de un `Pipeline`, con semilla fija.
+- Evalúa K = 2, 3, 4 y 5 con silhouette (`ClusteringEvaluator`), método del codo y tamaño del cluster más pequeño.
+- Criterio de selección: K ≥ 3, ningún cluster menor al 5% y mayor silhouette.
+- Describe cada cluster con medianas, salario y composición por educación, categoría ocupacional y dominio.
+- Guarda el modelo en `Transform_Data/modelos/kmeans_segmentacion` y la asignación en `Transform_Data/segmentacion_kmeans_2025`.
+
+### 03 pipelines
 
 Implementa los puntos 5 y 6:
 
@@ -48,7 +60,18 @@ Implementa los puntos 5 y 6:
 - Métricas de entrenamiento y brechas de generalización para apoyar el análisis de sobreajuste.
 - Selección por menor RMSE y guardado de los mejores `PipelineModel`.
 
-El notebook 02 se detiene con un mensaje explicativo si el notebook 01 todavía no ha generado `Transform_Data/personas_preparadas_2025`.
+### 04 evaluacion final
+
+Implementa las actividades 7 y 8:
+
+- Lee la configuración elegida por algoritmo de `seleccion_modelos_validacion.json` (notebook 03).
+- Reentrena ambos pipelines con todo 2025 (T1–T4) y evalúa una sola vez en 2026T1, con baseline, sobre exactamente los mismos registros.
+- MAE, RMSE y R² en prueba, comparados con los de validación 2025T4.
+- Residuo = real − predicho (positivo = subestimación). Gráficos real vs predicho (y = x, escala lineal y log) y residuos vs predicho con una misma muestra de hasta 5,000 registros.
+- MAE y error medio por nivel educativo y dominio, y por tramos de percentil del salario real, con todos los registros de prueba.
+- Discusión final de todos los hallazgos.
+
+Los notebooks 02, 03 y 04 se detienen con un mensaje explicativo si el notebook 01 todavía no ha generado `Transform_Data/personas_preparadas_2025`.
 
 ## Descargar los datos
 
@@ -63,33 +86,20 @@ El descargador no sobrescribe archivos existentes. Los Excel y los derivados est
 
 ## Entorno recomendado con Docker
 
-El contenedor usa Python 3.11, Java 17 y PySpark 3.5.1. Primero abra Docker Desktop y espere a que el motor esté listo.
+El contenedor usa Python 3.11, Java 17 y PySpark 3.5.1; las versiones de las librerías están en `requirements.txt` (PySpark 3.5.1 requiere `pandas<3` y `numpy<2`). No es necesario instalar Java ni PySpark en Windows: los notebooks deben ejecutarse dentro del contenedor, no con un entorno virtual local.
 
-Construya la imagen:
-
-```powershell
-cd C:\Projects\Data-Science\L07_Spark_ML_Lib
-docker build -f dockerfile -t l07-spark:3.5.1 .
-```
-
-Inicie JupyterLab con el laboratorio completo montado:
+Primero abra Docker Desktop y espere a que el motor esté listo. Luego, desde la carpeta del laboratorio:
 
 ```powershell
-$laboratorio = (Get-Location).Path
-
-docker run --rm `
-  --name l07-eneic-jupyter `
-  -p 127.0.0.1:8888:8888 `
-  --mount "type=bind,source=$laboratorio,target=/opt/app/laboratorio" `
-  --workdir /opt/app/laboratorio `
-  --env SPARK_LOCAL_IP=127.0.0.1 `
-  --env PYTHONPATH=/tmp/labdeps `
-  --entrypoint bash `
-  l07-spark:3.5.1 `
-  -lc "python -m pip install --target /tmp/labdeps openpyxl 'pandas>=2.2,<3' 'numpy<2' && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --notebook-dir=/opt/app/laboratorio"
+cd L07_Spark_ML_Lib
+docker compose up --build
 ```
 
-Abra la URL `http://127.0.0.1:8888/lab?token=...` mostrada en la terminal. Jupyter continuará ejecutándose mientras:
+La primera vez construye la imagen `l07-spark:3.5.1` (unos minutos); después reutiliza la caché. La carpeta del laboratorio queda montada en `/opt/app/laboratorio`, así que los Excel de `Data/` son visibles y todo lo que se guarda en `Transform_Data/` aparece también en Windows.
+
+Abra la URL `http://127.0.0.1:8888/lab?token=...` mostrada en la terminal. Una vez creada la `SparkSession`, la Spark UI está en `http://127.0.0.1:4040`. Para detener: `Ctrl+C` y luego `docker compose down`.
+
+Jupyter continuará ejecutándose mientras:
 
 - la terminal permanezca abierta;
 - no se presione `Ctrl+C`;
@@ -105,13 +115,16 @@ El aviso `Skipped non-installed server(s)` sólo indica que no están instalados
    - `Transform_Data/personas_preparadas_2025/`
    - `Transform_Data/personas_preparadas_2026/`
    - `Transform_Data/manifiesto_ejecucion.json`
-4. Abra `Notebooks/02_pipelines.ipynb`.
-5. Use nuevamente **Restart Kernel and Run All Cells**.
-6. Revise las tablas de métricas y la interpretación generada al final.
+4. Abra `Notebooks/02_segmentacion_kmeans.ipynb` y use **Restart Kernel and Run All Cells**.
+5. Abra `Notebooks/03_pipelines.ipynb` y use nuevamente **Restart Kernel and Run All Cells**.
+6. Abra `Notebooks/04_evaluacion_final.ipynb` y use **Restart Kernel and Run All Cells** (requiere el JSON del notebook 03).
+7. Revise las tablas de métricas y las interpretaciones generadas al final de cada notebook.
+
+Los notebooks 02 y 03 sólo dependen de los Parquet del notebook 01; el 04 depende además del JSON de selección del 03.
 
 ## Salidas de los pipelines
 
-El notebook 02 genera:
+El notebook 03 genera:
 
 ```text
 Transform_Data/
@@ -124,7 +137,7 @@ Transform_Data/
     └── validacion_random_forest/
 ```
 
-Estos son modelos de selección entrenados con 2025T1–T3 y comparados sobre 2025T4. El conjunto 2026T1 permanece reservado y no se consulta en los pipelines documentados aquí.
+Estos son modelos de selección entrenados con 2025T1–T3 y comparados sobre 2025T4. El conjunto 2026T1 permanece reservado en el notebook 03 y sólo se utiliza en `04_evaluacion_final.ipynb`.
 
 ## Criterios metodológicos
 

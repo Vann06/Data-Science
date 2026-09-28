@@ -1,9 +1,16 @@
+# Uso: docker compose up --build   (detener con Ctrl+C y luego docker compose down)
 services:
   laboratorio:
-    build: .
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: l07-spark:3.5.1
+    container_name: l07-eneic-jupyter
     ports:
-      - "127.0.0.1:8888:8888"
+      - "127.0.0.1:8888:8888"   # JupyterLab
+      - "127.0.0.1:4040:4040"   # Spark UI (disponible al crear la SparkSession)
     volumes:
-      - .:/workspace
+      - .:/opt/app/laboratorio
+    working_dir: /opt/app/laboratorio
     environment:
       SPARK_LOCAL_IP: 127.0.0.1

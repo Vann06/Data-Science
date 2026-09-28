@@ -1,5 +1,11 @@
+# Dependencias del contenedor (se instalan en la imagen con el dockerfile).
+# PySpark 3.5.1 requiere pandas < 3 y numpy < 2.
+pyspark==3.5.1
 pandas>=2.2,<3
+numpy>=1.26,<2
+pyarrow>=14
 openpyxl>=3.1,<4
 matplotlib>=3.8,<4
 jupyterlab>=4,<5
+ipykernel>=6
 nbformat>=5.10,<6
